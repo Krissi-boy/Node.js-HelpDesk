@@ -11,13 +11,44 @@
     <ul>
         <% data.forEach(function(d) { %>
           <li>
-            <strong><%= d.idtest_1 %></strong> 
-            <strong><%= d.name %></strong> 
-            <strong><%= d.age %></strong> 
+            <strong><%= d.person_nr %></strong> 
+            <strong><%= d.brukernavn %></strong> 
+            <strong><%= d.mellomnavn %></strong> 
+            <strong><%= d.etternavn%></strong> 
+            <strong><%= d.alder %></strong> 
+            <strong><%= d.passord %></strong> 
+            <strong><%= d.tlf %></strong>
+            <strong><%= d.email %></strong> 
           </li>
         <% }); %>
     </ul>
     
   
+  <style>
+    body {
+      background-color: lightskyblue;
+      background-image: background.jpg;
+    }
+  </style>
+ 
+
+    <h1>Venligst logg inn :)</h1>
+    <form action="/user" method="post">
+      <div class="input-field">
+          <input type="text" name="brukernavn" id="brukernavn" placeholder="Skriv inn brukernavn">
+      </div>
+      <div class="input-field">
+          <input type="password" name="passord'" id="passord" placeholder="Skriv inn passord">
+      </div>
+      <input type="submit" value="Logg inn">
+    </form>
+ 
+
+
+
+
+
+
+
 </body>
 </html>
