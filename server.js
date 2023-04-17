@@ -66,29 +66,48 @@ app.get('/index.html', function (req, res) {
  app.get('/', function (req, res) {
    session=req.session;
    if(session.userid){
-      res.render('login_index.ejs', { 
+      res.render('bruker.ejs', { 
           userid: session.userid      
       });
 
    } 
    else {
-      res.render('login.ejs', { });
+      res.render('startup.ejs', { });
    }
 })
 
 app.get('/logout', function (req, res) {
   req.session.destroy();
-  res.render('login.ejs', {     
+  res.render('startup.ejs', {     
   });
 
 })
+
+
+
+
+app.get('/bruker', function (req, res) {
+   session=req.session;
+   if(session.userid){
+      res.render('bruker.ejs', { 
+          userid: session.userid      
+      });
+
+   } 
+   else {
+      res.render('index.ejs', { });
+   }
+})
+
+
+
 
 app.post('/user',(req,res) => {
 
 console.log(req.body.brukernavn)
 console.log(req.body.passord)
 
-  if(req.body.brukernavn == brukernavn && req.body.passord == passord){
+  if(req.body.username == brukernavn && req.body.password == passord){
       session=req.session;
       session.userid=req.body.brukernavn;
       console.log(req.session)

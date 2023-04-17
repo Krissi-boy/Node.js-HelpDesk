@@ -12,26 +12,17 @@
     <ul>
         <% data.forEach(function(d) { %>
           <li>
-           
+            <strong><%= d.brukernavn %></strong> 
+            <strong><%= d.mellomnavn %></strong> 
+            <strong><%= d.etternavn %></strong> 
           </li>
         <% }); %>
     </ul>
     
 
     <h1>Venligst logg inn :)</h1>
-    <form action="/user" method="post">
-      <div class="input-field">
-          <input type="text" name="username" id="username" placeholder="Enter Username">
-      </div>
-      <div class="input-field">
-          <input type="password" name="password" id="password" placeholder="Enter Password">
-      </div>
-      <input type="submit" value="LogIn">
-    </form>
+    
  
- 
-
-
 
 
 </body>
