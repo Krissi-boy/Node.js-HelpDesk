@@ -35,10 +35,6 @@ app.use(sessions({
 app.set('view engine', 'ejs');
 
  
-//username and password   
-const brukernavn = 'Kristoffer';
-const passord = 'Passord1';
- 
 
 // a variable to save a session
 var session;
@@ -86,6 +82,7 @@ app.get('/logout', function (req, res) {
 
 
 
+
 app.get('/bruker', function (req, res) {
    session=req.session;
    if(session.userid){
@@ -101,22 +98,57 @@ app.get('/bruker', function (req, res) {
 
 
 
+app.post('/login', function (req, res) {
+ 
+   // hent brukernavn og passord fra skjema på login
+   var brukernavn = req.body.brukernavn;
+   var passord = req.body.passord;
 
-app.post('/user',(req,res) => {
+   // perform the MySQL query to check if the user exists
+   var sql = 'SELECT * FROM brukere WHERE brukernavn = ? AND passord = ?';
+   
+   con.query(sql, [brukernavn, passord], (error, results) => {
+       if (error) {
+           res.status(500).send('Internal Server Error');
+       } else if (results.length === 1) {
+           res.redirect('/profile');
+           session.userid=req.body.username; // set session userid til brukernavn
 
-console.log(req.body.brukernavn)
-console.log(req.body.passord)
+       } else {
+           res.redirect('/login?error=invalid'); // redirect med error beskjed i GET
+       }
+   });
+});
 
-  if(req.body.username == brukernavn && req.body.password == passord){
-      session=req.session;
-      session.userid=req.body.brukernavn;
-      console.log(req.session)
-      res.send(`Hei, velkommen! <a href=\'/logout'>Trykk her for å logge ut</a>`);
-  }
-  else{
-      res.send('Feil brukernavn eller passord');
-  }
-})
+
+
+app.post('/signup', (req, res) => {
+ 
+   var con = mysql.createConnection({host:"mysql.database.azure.com", user:"azureuser", 
+
+   password:"Passord", database:"db", port:3306, ssl:{ca:fs.readFileSync("DigiCertGlobalRootCA.crt.pem")}});
+
+   
+   var brukernavn = req.body.brukernavn;
+   var email = req.body.email;
+   var passord = req.body.passord;
+
+   var sql = `INSERT INTO brukere (brukernavn, email, passord) VALUES (?, ?, ?)`;
+   var values = [brukernavn, email, passord];
+
+   con.query(sql, values, (err, result) => {
+       if (err) {
+           throw err;
+       }
+       console.log('User inserted into database');
+       
+       res.render('index.ejs');
+
+   });
+
+});
+
+
 
 
  var server = app.listen(8081, function () {
