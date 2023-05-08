@@ -40,6 +40,8 @@ app.set('view engine', 'ejs');
 var session;
 
 
+
+
 app.get('/index.html', function (req, res) {
 
     conn.connect(function(err) {
@@ -62,7 +64,7 @@ app.get('/index.html', function (req, res) {
  app.get('/', function (req, res) {
    session=req.session;
    if(session.userid){
-      res.render('bruker.ejs', { 
+      res.render('user.ejs', { 
           userid: session.userid      
       });
 
@@ -83,10 +85,10 @@ app.get('/logout', function (req, res) {
 
 
 
-app.get('/bruker', function (req, res) {
+app.get('/user', function (req, res) {
    session=req.session;
    if(session.userid){
-      res.render('bruker.ejs', { 
+      res.render('user.ejs', { 
           userid: session.userid      
       });
 
@@ -98,7 +100,7 @@ app.get('/bruker', function (req, res) {
 
 
 
-app.post('/login', function (req, res) {
+app.post('/user', function (req, res) {
  
    // hent brukernavn og passord fra skjema på login
    var brukernavn = req.body.brukernavn;
@@ -112,7 +114,7 @@ app.post('/login', function (req, res) {
            res.status(500).send('Internal Server Error');
        } else if (results.length === 1) {
            res.redirect('/profile');
-           session.userid=req.body.username; // set session userid til brukernavn
+           session.userid=req.body.brukernavn; // set session userid til brukernavn
 
        } else {
            res.redirect('/login?error=invalid'); // redirect med error beskjed i GET
@@ -122,7 +124,7 @@ app.post('/login', function (req, res) {
 
 
 
-app.post('/signup', (req, res) => {
+app.post('/user', (req, res) => {
  
    var con = mysql.createConnection({host:"mysql.database.azure.com", user:"azureuser", 
 
