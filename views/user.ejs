@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="user.css">
     <title>EJS</title>
 </head>
 <body>
@@ -15,12 +15,49 @@
             <strong><%= d.brukernavn %></strong> 
             <strong><%= d.mellomnavn %></strong> 
             <strong><%= d.etternavn %></strong> 
+            
           </li>
         <% }); %>
     </ul>
     
-    
 
+    <title>Welcome major</title>
+ 
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Velkommen til Min Hjemmeside</h1>
+    </div>
+    
+    <div class="nav">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Contact Agent</a></li>
+      </ul>
+    </div>
+    
+    <div class="content">
+      <h2>About us</h2>
+      <p>Contact Agent.</p>
+    </div>
+    
+    <div class="footer">
+      <p>&copy; Agent.</p>
+    </div>
+  </div>
+
+<script>
+    document.getElementById("user_insert").addEventListener("submit", function(event) {
+      event.preventDefault();
+      
+      var username = document.getElementById("username").value;
+      var email = document.getElementById("email").value;
+  
+      
+     
+    });
+</script>
    
 
 

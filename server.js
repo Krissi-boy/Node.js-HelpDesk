@@ -7,11 +7,6 @@ const sessions = require('express-session');
 var app = express();
  
 
-var conn=mysql.createConnection({host:"kristoffer-mysql.mysql.database.azure.com", 
-user:"kristoffer", password:"Passord1", 
-database:"helpdesk_db", port:3306, 
-ssl:{ca:fs.readFileSync("DigiCertGlobalRootCA.crt.pem")}});
-
 
 app.use(express.static('public'));
  
@@ -88,33 +83,53 @@ app.get('/logout', function (req, res) {
 app.get('/user', function (req, res) {
    session=req.session;
    if(session.userid){
+
+
+      
       res.render('user.ejs', { 
-          userid: session.userid      
+          userid: session.userid,      
+         data: session.all_user_info
+
+
       });
 
    } 
    else {
-      res.render('index.ejs', { });
+      res.render('startup.ejs', { });
    }
 })
 
 
 
 app.post('/user', function (req, res) {
+
+var con = mysql.createConnection({host:"kristoffer-mysql.mysql.database.azure.com", 
+user:"kristoffer", password:"Passord1", 
+database:"helpdesk_db", port:3306, 
+ssl:{ca:fs.readFileSync("DigiCertGlobalRootCA.crt.pem")}});
+
  
    // hent brukernavn og passord fra skjema på login
-   var brukernavn = req.body.brukernavn;
-   var passord = req.body.passord;
+   var username = req.body.username;
+   var password = req.body.password;
+   console.log(username, password)
 
    // perform the MySQL query to check if the user exists
    var sql = 'SELECT * FROM brukere WHERE brukernavn = ? AND passord = ?';
    
-   con.query(sql, [brukernavn, passord], (error, results) => {
+   con.query(sql, [username, password], (error, results) => {
        if (error) {
+         throw error;
            res.status(500).send('Internal Server Error');
        } else if (results.length === 1) {
-           res.redirect('/profile');
-           session.userid=req.body.brukernavn; // set session userid til brukernavn
+         session=req.session
+          session.userid=req.body.username; // set session userid til brukernavn
+          session.mellomnavn = results[0].mellomnavn
+         session.all_user_info = results
+          
+          
+          
+          res.redirect('/user');
 
        } else {
            res.redirect('/login?error=invalid'); // redirect med error beskjed i GET
@@ -124,19 +139,21 @@ app.post('/user', function (req, res) {
 
 
 
-app.post('/user', (req, res) => {
+app.post('/user_insert', (req, res) => {
  
-   var con = mysql.createConnection({host:"mysql.database.azure.com", user:"azureuser", 
-
-   password:"Passord", database:"db", port:3306, ssl:{ca:fs.readFileSync("DigiCertGlobalRootCA.crt.pem")}});
+   var con=mysql.createConnection({host:"kristoffer-mysql.mysql.database.azure.com", 
+   user:"kristoffer", password:"Passord1", 
+   database:"helpdesk_db", port:3306, 
+   ssl:{ca:fs.readFileSync("DigiCertGlobalRootCA.crt.pem")}});
+   
 
    
-   var brukernavn = req.body.brukernavn;
+   var username = req.body.username;
    var email = req.body.email;
-   var passord = req.body.passord;
+   var password = req.body.password;
 
    var sql = `INSERT INTO brukere (brukernavn, email, passord) VALUES (?, ?, ?)`;
-   var values = [brukernavn, email, passord];
+   var values = [username, email, password];
 
    con.query(sql, values, (err, result) => {
        if (err) {
@@ -159,3 +176,5 @@ app.post('/user', (req, res) => {
     
     console.log("Example app listening at http://%s:%s", host, port)
  })
+
+
