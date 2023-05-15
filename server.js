@@ -164,8 +164,27 @@ app.post('/user_insert', (req, res) => {
        res.render('index.ejs');
 
    });
+})
 
-});
+
+app.get('/', function (req, res) {
+      session=req.session;
+      if(session.userid){
+         res.render('user_insert.ejs', { 
+             userid: session.userid      
+         });
+   
+      } 
+      else {
+         res.render('startup.ejs', { });
+      }
+   })
+   
+
+
+
+
+
 
 
 

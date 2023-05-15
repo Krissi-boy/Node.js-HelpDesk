@@ -2,3 +2,13 @@ body {
     background-image:url('background.jpg');
 }
 
+h1 {
+    background-color: aqua;
+    width: 135px;
+}
+
+div {
+    background: chartreuse; 
+    width: 30px;
+    height: 30px;
+}
