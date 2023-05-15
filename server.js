@@ -139,6 +139,12 @@ ssl:{ca:fs.readFileSync("DigiCertGlobalRootCA.crt.pem")}});
 
 
 
+app.get('/login', function (req, res) {
+   res.render('user.ejs', {     
+   });
+})
+
+
 app.post('/user_insert', (req, res) => {
  
    var con=mysql.createConnection({host:"kristoffer-mysql.mysql.database.azure.com", 
@@ -151,9 +157,11 @@ app.post('/user_insert', (req, res) => {
    var username = req.body.username;
    var email = req.body.email;
    var password = req.body.password;
+   var lastname = req.body.lastname
+   var age = req.body.age
 
-   var sql = `INSERT INTO brukere (brukernavn, email, passord) VALUES (?, ?, ?)`;
-   var values = [username, email, password];
+   var sql = `INSERT INTO brukere (brukernavn, email, passord, etternavn, alder) VALUES (?, ?, ?, ?, ?)`;
+   var values = [username, email, password, lastname, age];
 
    con.query(sql, values, (err, result) => {
        if (err) {
@@ -161,7 +169,7 @@ app.post('/user_insert', (req, res) => {
        }
        console.log('User inserted into database');
        
-       res.render('index.ejs');
+       res.render('startup.ejs');
 
    });
 })

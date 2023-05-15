@@ -29,18 +29,24 @@
 
 
     <h2>Don't have an account yet? :)</h2>
-    <form action="/user_insert" method="post">
-      <div class="input-field">
-          <input type="text" name="username" id="username" placeholder="Enter Username">
-      </div>
-      <div class="input-field">
-          <input type="password" name="password" id="password" placeholder="Enter Password">
-      </div>
-      <div class="input-field">
-        <input type="email" name="email" id="email" placeholder="Enter email">
-      </div>
-      <input type="submit" value="Sign up">
-    </form>
+    <form action="/user" method="post">
+        <div class="input-field">
+            <input type="text" name="username" id="username" placeholder="Enter Username">
+        </div>
+        <div class="input-field">
+            <input type="password" name="password" id="password" placeholder="Enter Password">
+        </div>
+        <div class="input-field">
+          <input type="email" name="email" id="email" placeholder="Enter email">
+        </div>
+        <div class="input-field">
+          <input type="text" name="lastname" id="lastname" placeholder="Enter lastname">
+        </div>
+        <div class="input-field">
+          <input type="number" name="age" id="age" placeholder="Enter age">
+        </div>
+        <input type="submit" value="Sign up">
+      </form>
  
  
 
