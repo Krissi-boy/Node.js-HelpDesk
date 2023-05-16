@@ -146,38 +146,15 @@ app.post('/user', function (req, res) {
     });
   });
   
-
-
-
-
-
-
   app.get('/login', function (req, res) {
     res.render('user.ejs', {});
   });
   
-
-
-
-
-
-
-  app.post('/user_insert', (req, res) => {
-    // opprett databaseforbindelse for å utføre INSERT
-    var con = mysql.createConnection({
-      host: "kristoffer-mysql.mysql.database.azure.com",
-      user: "kristoffer",
-      password: "Passord1",
-      database: "helpdesk_db",
-      port: 3306,
-      ssl: { ca: fs.readFileSync("DigiCertGlobalRootCA.crt.pem") }
-    });
   
 
 
 
-
-
+  app.post('/user_insert', (req, res) => {
     // hent data fra skjemaet
     var username = req.body.username;
     var email = req.body.email;
