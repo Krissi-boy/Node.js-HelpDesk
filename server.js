@@ -5,11 +5,9 @@ const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 
 var app = express();
- 
-
 
 app.use(express.static('public'));
- 
+
 // parsing the incoming data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,17 +17,14 @@ const oneDay = 1000 * 60 * 60 * 24; // calculate one day
 
 // express app should use sessions
 app.use(sessions({
-   secret: "thisismysecrctekeyfhgjkgfhkgfjlklkl",
-   saveUninitialized:true,
-   cookie: { maxAge: oneDay },
-   resave: false 
+  secret: "thisismysecrctekeyfhgjkgfhkgfjlklkl",
+  saveUninitialized: true,
+  cookie: { maxAge: oneDay },
+  resave: false
 }));
-
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
-
- 
 
 // a variable to save a session
 var session;
@@ -37,171 +32,181 @@ var session;
 
 
 
+// Create database connection
+var con = mysql.createConnection({
+  host: "kristoffer-mysql.mysql.database.azure.com",
+  user: "kristoffer",
+  password: "Passord1",
+  database: "helpdesk_db",
+  port: 3306,
+  ssl: { ca: fs.readFileSync("DigiCertGlobalRootCA.crt.pem") }
+});
+
+
+
+
+con.connect((error) => {
+  if (error) {
+    console.error('Feil ved tilkobling til MySQL-databasen: ' + error.stack);
+    return;
+  }
+
+  console.log('Tilkoblet til MySQL-databasen som ID: ' + con.threadId);
+});
+
+
+
+
 app.get('/index.html', function (req, res) {
+    //if (err) throw err;
+  con.query("SELECT * FROM brukere", function (err, result, fields) {
+    if (err) {
+      console.error('Feil ved databaseforespørsel: ' + err.stack);
+      res.status(500).send('Feil ved databaseforespørsel');
+      return;
+    }
+    console.log(result);
+    res.render('index.ejs', {
+      data: result,
+      var1: "tekst"
 
-    conn.connect(function(err) {
-        //if (err) throw err;
-        conn.query("SELECT * FROM brukere", function (err, result, fields) {
-           if (err) throw err;
-           console.log(result);     
-                         
-           res.render('index.ejs', {
-              data: result,
-              var1: "tekst"
-                 
-         }); // render
-        }); // select
-   });// connect
- }) // app get
- 
+    }); // select
+  }); // connect
+}); // app get
 
 
- app.get('/', function (req, res) {
-   session=req.session;
-   if(session.userid){
-      res.render('user.ejs', { 
-          userid: session.userid      
-      });
 
-   } 
-   else {
-      res.render('startup.ejs', { });
-   }
-})
+
+app.get('/', function (req, res) {
+  session = req.session;
+  if (session.userid) {
+    res.render('user.ejs', {
+      userid: session.userid
+    }); // render
+
+  } else {
+    res.render('startup.ejs', {});
+  }
+}); // render
+
+
+
 
 app.get('/logout', function (req, res) {
   req.session.destroy();
-  res.render('startup.ejs', {     
-  });
-
-})
+  res.render('startup.ejs', {});
+});
 
 
 
 
 
 app.get('/user', function (req, res) {
-   session=req.session;
-   if(session.userid){
-
-
-      
-      res.render('user.ejs', { 
-          userid: session.userid,      
-         data: session.all_user_info
-
-
-      });
-
-   } 
-   else {
-      res.render('startup.ejs', { });
-   }
-})
-
-
-
-app.post('/user', function (req, res) {
-
-var con = mysql.createConnection({host:"kristoffer-mysql.mysql.database.azure.com", 
-user:"kristoffer", password:"Passord1", 
-database:"helpdesk_db", port:3306, 
-ssl:{ca:fs.readFileSync("DigiCertGlobalRootCA.crt.pem")}});
-
- 
-   // hent brukernavn og passord fra skjema på login
-   var username = req.body.username;
-   var password = req.body.password;
-   console.log(username, password)
-
-   // perform the MySQL query to check if the user exists
-   var sql = 'SELECT * FROM brukere WHERE brukernavn = ? AND passord = ?';
-   
-   con.query(sql, [username, password], (error, results) => {
-       if (error) {
-         throw error;
-           res.status(500).send('Internal Server Error');
-       } else if (results.length === 1) {
-         session=req.session
-          session.userid=req.body.username; // set session userid til brukernavn
-          session.mellomnavn = results[0].mellomnavn
-         session.all_user_info = results
-          
-          
-          
-          res.redirect('/user');
-
-       } else {
-           res.redirect('/login?error=invalid'); // redirect med error beskjed i GET
-       }
-   });
+  session = req.session;
+  if (session.userid) {
+    res.render('user.ejs', {
+      userid: session.userid,
+      data: session.all_user_info
+    });
+  } else {
+    res.render('startup.ejs', {});
+  }
 });
 
 
 
-app.get('/login', function (req, res) {
-   res.render('user.ejs', {     
-   });
-})
 
 
-app.post('/user_insert', (req, res) => {
- 
-   var con=mysql.createConnection({host:"kristoffer-mysql.mysql.database.azure.com", 
-   user:"kristoffer", password:"Passord1", 
-   database:"helpdesk_db", port:3306, 
-   ssl:{ca:fs.readFileSync("DigiCertGlobalRootCA.crt.pem")}});
-   
+app.post('/user', function (req, res) {
+  // hent brukernavn og passord fra skjema på login
+  var username = req.body.username;
+  var password = req.body.password;
+  console.log(username, password);
 
-   
-   var username = req.body.username;
-   var email = req.body.email;
-   var password = req.body.password;
-   var lastname = req.body.lastname
-   var age = req.body.age
+  // perform the MySQL query to check if the user exists
+  var sql = 'SELECT * FROM brukere WHERE brukernavn = ? AND passord = ?';
 
-   var sql = `INSERT INTO brukere (brukernavn, email, passord, etternavn, alder) VALUES (?, ?, ?, ?, ?)`;
-   var values = [username, email, password, lastname, age];
+  con.query(sql, [username, password], (error, results) => {
+    if (error) {
+      console.error('Feil ved databaseforespørsel: ' + error.stack);
+        res.status(500).send('Feil ved databaseforespørsel');
+      return;
 
-   con.query(sql, values, (err, result) => {
-       if (err) {
-           throw err;
-       }
-       console.log('User inserted into database');
-       
-       res.render('startup.ejs');
+    } else if (results.length === 1) {
+        session = req.session;
+         session.userid = req.body.username; // sett session userid til brukernavn
+         session.mellomnavn = results[0].mellomnavn;
+        session.all_user_info = results;
+  
 
-   });
-})
-
-
-app.get('/', function (req, res) {
-      session=req.session;
-      if(session.userid){
-         res.render('user_insert.ejs', { 
-             userid: session.userid      
-         });
-   
-      } 
-      else {
-         res.render('startup.ejs', { });
+        res.redirect('/user');
+      } else {
+        res.redirect('/login?error=invalid'); // redirect med error beskjed i GET
       }
-   })
-   
+    });
+  });
+  
 
 
 
 
 
 
+  app.get('/login', function (req, res) {
+    res.render('user.ejs', {});
+  });
+  
 
 
 
- var server = app.listen(8081, function () {
-    var host = server.address().address
-    var port = server.address().port
+
+
+
+  app.post('/user_insert', (req, res) => {
+    // opprett databaseforbindelse for å utføre INSERT
+    var con = mysql.createConnection({
+      host: "kristoffer-mysql.mysql.database.azure.com",
+      user: "kristoffer",
+      password: "Passord1",
+      database: "helpdesk_db",
+      port: 3306,
+      ssl: { ca: fs.readFileSync("DigiCertGlobalRootCA.crt.pem") }
+    });
+  
+
+
+
+
+
+    // hent data fra skjemaet
+    var username = req.body.username;
+    var email = req.body.email;
+    var password = req.body.password;
+    var lastname = req.body.lastname;
+    var age = req.body.age;
+  
+    var sql = `INSERT INTO brukere (brukernavn, email, passord, etternavn, alder) VALUES (?, ?, ?, ?, ?)`;
+    var values = [username, email, password, lastname, age];
+  
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        throw err;
+      }
+      console.log('User inserted into database');
+      
+      res.render('startup.ejs');
+    });
+  });
+  
+
+
+
+
+
+  
+  var server = app.listen(8081, function () {
+    var host = server.address().address;
+    var port = server.address().port;
     
-    console.log("Example app listening at http://%s:%s", host, port)
- })
-
-
+    console.log("Example app listening at http://%s:%s", host, port);
+  });
