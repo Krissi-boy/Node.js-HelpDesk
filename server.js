@@ -181,6 +181,111 @@ app.post('/user', function (req, res) {
 
 
   
+
+// POST-rute for å sende inn en sak
+app.post('/user_insert', (req, res) => {
+  // hent data fra skjemaet
+  var username = req.body.username;
+  var email = req.body.email;
+  var password = req.body.password;
+  var lastname = req.body.lastname;
+  var age = req.body.age;
+
+  var sql = `INSERT INTO brukere (brukernavn, email, passord, etternavn, alder) VALUES (?, ?, ?, ?, ?)`;
+  var values = [username, email, password, lastname, age];
+
+  con.query(sql, values, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    console.log('User inserted into database');
+    
+    res.render('startup.ejs');
+  });
+});
+
+
+
+// logout button in user.ejs
+app.get('/log_out', function (req, res) {
+  req.session.destroy(function (error) {
+    if (error) {
+      console.log(error);
+    }
+    res.redirect('/index.ejs');
+  });
+});
+
+
+
+// Change account button in user.ejs
+app.get('/change_account', function (req, res) {
+  req.session.destroy(function (error) {
+    if (error) {
+      console.log(error);
+    }
+    res.redirect('/index.ejs');
+  });
+});
+
+
+
+// Change Contact Agent button in user.ejs
+app.get('/contact_agent', function (req, res) {
+  req.session.destroy(function (error) {
+    if (error) {
+      console.log(error);
+    }
+    res.redirect('/index.ejs');
+  });
+});
+
+
+// Change About Us button in user.ejs
+app.get('/about_us', function (req, res) {
+  req.session.destroy(function (error) {
+    if (error) {
+      console.log(error);
+    }
+    res.redirect('/index.ejs');
+  });
+});
+
+
+// Change Home button in user.ejs
+app.get('/home', function (req, res) {
+  req.session.destroy(function (error) {
+    if (error) {
+      console.log(error);
+    }
+    res.redirect('/index.ejs');
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   var server = app.listen(8081, function () {
     var host = server.address().address;
     var port = server.address().port;
