@@ -208,7 +208,7 @@ app.post('/user_insert', (req, res) => {
 
 // logout button in user.ejs
 app.get('/log_out', function (req, res) {
-  //.destroy use to kill session for the user
+  //.destroy use to kill all session from user
   req.session.destroy(function (error) {
     if (error) {
       console.log(error);
