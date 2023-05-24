@@ -208,13 +208,17 @@ app.post('/user_insert', (req, res) => {
 
 // logout button in user.ejs
 app.get('/log_out', function (req, res) {
+  //.destroy use to kill session for the user
   req.session.destroy(function (error) {
     if (error) {
       console.log(error);
     }
-    res.redirect('/index.ejs');
+    res.render('/startup.ejs');
   });
 });
+
+
+
 
 
 
@@ -224,7 +228,7 @@ app.get('/change_account', function (req, res) {
     if (error) {
       console.log(error);
     }
-    res.redirect('/index.ejs');
+    res.redirect('/startup.ejs');
   });
 });
 
@@ -236,7 +240,7 @@ app.get('/contact_agent', function (req, res) {
     if (error) {
       console.log(error);
     }
-    res.redirect('/index.ejs');
+    res.redirect('/startup.ejs');
   });
 });
 
@@ -247,7 +251,7 @@ app.get('/about_us', function (req, res) {
     if (error) {
       console.log(error);
     }
-    res.redirect('/index.ejs');
+    res.redirect('/startup.ejs');
   });
 });
 
