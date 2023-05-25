@@ -228,7 +228,7 @@ app.get('/change_account', function (req, res) {
     if (error) {
       console.log(error);
     }
-    res.redirect('/startup.ejs');
+    res.render('/index.ejs');
   });
 });
 
@@ -240,7 +240,7 @@ app.get('/contact_agent', function (req, res) {
     if (error) {
       console.log(error);
     }
-    res.redirect('/startup.ejs');
+    res.render('/startup.ejs');
   });
 });
 
@@ -251,7 +251,7 @@ app.get('/about_us', function (req, res) {
     if (error) {
       console.log(error);
     }
-    res.redirect('/startup.ejs');
+    res.render('/startup.ejs');
   });
 });
 
