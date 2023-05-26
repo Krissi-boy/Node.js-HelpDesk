@@ -213,7 +213,7 @@ app.get('/log_out', function (req, res) {
     if (error) {
       console.log(error);
     }
-    res.render('/startup.ejs');
+    res.render('startup.ejs');
   });
 });
 
@@ -228,7 +228,7 @@ app.get('/change_account', function (req, res) {
     if (error) {
       console.log(error);
     }
-    res.render('/index.ejs');
+    res.render('startup.ejs');
   });
 });
 
@@ -240,7 +240,7 @@ app.get('/contact_agent', function (req, res) {
     if (error) {
       console.log(error);
     }
-    res.render('/startup.ejs');
+    res.render('send_case.ejs');
   });
 });
 
@@ -251,7 +251,7 @@ app.get('/about_us', function (req, res) {
     if (error) {
       console.log(error);
     }
-    res.render('/startup.ejs');
+    res.render('helpdesk_info.ejs');
   });
 });
 
@@ -262,7 +262,49 @@ app.get('/home', function (req, res) {
     if (error) {
       console.log(error);
     }
-    res.redirect('/index.ejs');
+    res.render('index.ejs');
+  });
+});
+
+
+
+
+app.get('/cancel_case', function (req, res) {
+  req.session.destroy(function (error) {
+    if (error) {
+      console.log(error);
+    }
+    res.render('user.ejs', {
+      data: session.all_user_info
+    });
+  });
+});
+
+
+
+
+
+// POST-rute for å sende inn en sak
+app.post('/send_case', (req, res) => {
+  // Hent data fra skjemaet
+  var problem = req.body.problem;
+  var image = req.body.image;
+  var nivaa = req.body.nivaa;
+  var timeframe = req.body.timeframe;
+  var category = req.body.category;
+
+  var sql = `INSERT INTO tickets (problem, bilde, nivaa, tidsramme, kategori) VALUES (?, ?, ?, ?, ?)`;
+  var values = [problem, image, nivaa, timeframe, category];
+
+  con.query(sql, values, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    console.log('case inserted into database');
+
+    res.render('user.ejs', {
+      data: session.all_user_info
+    });
   });
 });
 
@@ -271,11 +313,11 @@ app.get('/home', function (req, res) {
 
 
 
-
-
-
-
-
+// Definer ruter og håndter forespørsler
+app.post('/send_case', (req, res) => {
+  // Render EJS-filen og send den som respons
+  res.render('user.ejs');
+});
 
 
 

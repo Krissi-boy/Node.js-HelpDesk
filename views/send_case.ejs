@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="send_case.css">
+    <title>EJS</title>
+</head>
+<body>
+    
+    
+
+    <h1>SEND CASE:</h1>
+ 
+
+
+<div class="problem">
+
+    <p>What problems do you encounter?</p>
+    <form action="/case_description" method="post">
+        <div class="input-field">
+            <input type="text" name="problem" id="problem" placeholder="Enter problem">
+        </div>
+       
+    </form>
+
+</div>
+
+
+
+   
+<div class="priority">
+    <p>Priority Level</p>
+    <div class="input-field">
+        <div class="green">
+            <input type="radio" name="nivaa" id="nivaa" placeholder="Green" value="Green">
+        </div>
+        <div class="yellow">
+            <input type="radio" name="nivaa" id="nivaa" placeholder="Yellow" value="Yellow">
+        </div>
+        <div class="red">
+            <input type="radio" name="nivaa" id="nivaa" placeholder="Red" value="Red"> 
+        </div>
+    </div>
+</div>
+
+
+
+   
+    
+<div class="info">
+    <p>Your Information</p>
+    <form action="/send_case" method="post">
+      <div class="input-field">
+          <input type="text" name="image" id="image" placeholder="Enter image">
+      </div>
+      <div class="input-field">
+          <input type="date" name="timeframe" id="timeframe" placeholder="Enter timeframe">
+      </div>
+      <div class="input-field">
+        <input type="text" name="category" id="category" placeholder="Enter category">
+    </div>
+      <input type="submit" value="Send Case">
+    </form>
+
+ </div>
+   
+
+
+
+ <button><a href="/cancel_case">Cancel Case</a></button>
+
+
+</body>
+</html>

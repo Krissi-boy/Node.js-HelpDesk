@@ -1,0 +1,118 @@
+body {
+    background-image: url(send_case_background.avif);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+  
+h1 {
+    margin-bottom: 50px;
+    color: wheat;
+}
+  
+p {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: wheat;
+}
+  
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+  
+.info {
+    background-color: black;
+    color: #ffffff;
+    cursor: pointer;
+    width: 30%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.priority {
+    background-color: black;
+    color: #ffffff;
+    cursor: pointer;
+    width: 30%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.problem {
+    background-color: black;
+    color: #ffffff;
+    cursor: pointer;
+    width: 30%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.input-field {
+    margin-bottom: 15px;
+}
+
+a.button {
+    display: inline-block;
+    background-color: #008CBA;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 30px;
+}
+  
+a.button:hover {
+    background-color: #007A9A;
+}
+  
+
+.green input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 2px solid #009933;
+    outline: none;
+    background-color: #009933;
+}
+  
+.yellow input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 2px solid #ffcc00;
+    outline: none;
+    background-color: #ffcc00;
+}
+  
+.red input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 2px solid #ff0000;
+    outline: none;
+    background-color: #ff0000;
+}
+  
+  
+  
+  
