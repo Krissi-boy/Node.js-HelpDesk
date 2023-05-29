@@ -256,13 +256,37 @@ app.get('/about_us', function (req, res) {
 });
 
 
-// Change Home button in user.ejs
-app.get('/home', function (req, res) {
+// Change FAQ button in user.ejs
+app.get('/FAQ_site', function (req, res) {
   req.session.destroy(function (error) {
     if (error) {
       console.log(error);
     }
-    res.render('index.ejs');
+    res.render('FAQ.ejs');
+  });
+});
+
+
+
+app.get('/home_site', function (req, res) {
+  req.session.destroy(function (error) {
+    if (error) {
+      console.log(error);
+    }
+    res.render('user.ejs', {
+      data: session.all_user_info
+    });
+  });
+});
+
+
+
+app.get('/case_status', function (req, res) {
+  req.session.destroy(function (error) {
+    if (error) {
+      console.log(error);
+    }
+    res.render('case_status.ejs');
   });
 });
 
@@ -279,6 +303,9 @@ app.get('/cancel_case', function (req, res) {
     });
   });
 });
+
+
+
 
 
 
@@ -302,8 +329,7 @@ app.post('/send_case', (req, res) => {
     }
     console.log('case inserted into database');
 
-    res.render('user.ejs', {
-      data: session.all_user_info
+    res.render('case_status.ejs', {
     });
   });
 });

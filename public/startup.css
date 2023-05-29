@@ -4,41 +4,47 @@ body {
     background-color: #f1f1f1;
     padding: 10px;
     color: #333;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
-  
+
 h1 {
     text-align: center;
     font-size: 50px;
     margin-bottom: 30px;
     color: wheat;
 }
-  
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin-bottom: 30px;
+
+h2 {
+    margin-bottom: 20px;
+    color: wheat;
 }
-  
-li {
+
+.form-container {
     background-color: #fff;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 20px;
     border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+    max-width: 150px;
+}
+
+.input-field {
+    margin-bottom: 10px;
 }
 
 input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="number"] {
-    width: 100%;
+    width: 30%;
     padding: 10px;
-    margin-bottom: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
-  
-input[type="submit"],
-button {
+
+input[type="submit"] {
     background-color: #333;
     color: #fff;
     padding: 5px 10px;
@@ -46,23 +52,10 @@ button {
     border: none;
     cursor: pointer;
 }
-  
-input[type="submit"]:hover,
-button:hover {
+
+input[type="submit"]:hover {
     background-color: #555;
 }
-  
-h2 {
-    margin-bottom: 20px;
-    color: wheat;
-}
-  
-.form-container {
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    margin-bottom: 30px;
-    max-width: 5px;
-}
-  
+
+
+
