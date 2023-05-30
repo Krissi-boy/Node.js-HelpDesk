@@ -27,27 +27,28 @@
 
 </div>
 
-<div class="nav">
-    <li><a href="case_status">Status Case</a></li>
-    <li><a href="home_site">Home</a></li>
 
-   
+
 <div class="priority">
     <p>Priority Level</p>
     <div class="input-field">
-        <div class="green">
-            <input type="radio" name="nivaa" id="nivaa" placeholder="Green" value="Green">
-        </div>
-        <div class="yellow">
-            <input type="radio" name="nivaa" id="nivaa" placeholder="Yellow" value="Yellow">
-        </div>
-        <div class="red">
-            <input type="radio" name="nivaa" id="nivaa" placeholder="Red" value="Red"> 
-        </div>
+        <label for="green">
+            <input type="radio" name="nivaa" id="green" value="Green">
+            <span class="radio-custom"></span>
+            <span class="green">Green</span>
+        </label>
+        <label for="yellow">
+            <input type="radio" name="nivaa" id="yellow" value="Yellow">
+            <span class="radio-custom"></span> 
+            <span class="yellow">Yellow</span>
+        </label>
+        <label for="red">
+            <input type="radio" name="nivaa" id="red" value="Red">
+            <span class="radio-custom"></span> 
+            <span class="red">Red</span>
+        </label>
     </div>
 </div>
-
-
 
    
     
@@ -72,7 +73,8 @@
 
 
  <button><a href="/cancel_case">Cancel Case</a></button>
-
+ <button><a href="case_status">Status Case</a></button>
+ <button><a href="home_site">Home</a></button>
 
 </body>
 </html>

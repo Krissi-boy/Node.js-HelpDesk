@@ -1,121 +1,181 @@
 body {
     background-image: url(send_case_background.avif);
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
     background-color: #f5f5f5;
+    padding: 20px;
+    font-family: Arial, sans-serif;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
-  
+    
 h1 {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     color: wheat;
 }
-  
-p {
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: wheat;
-}
-  
-form {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-  
+    
+.problem,
+.priority,
 .info {
-    background-color: black;
-    color: #ffffff;
-    cursor: pointer;
-    width: 30%;
-    padding: 5px;
-    border: 1px solid #ccc;
+    background-color: #000;
+    max-width: 300px;
+    border-width: 30px;
+    color: #fff;
+    padding: 10px;
     border-radius: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
-
-.priority {
-    background-color: black;
-    color: #ffffff;
-    cursor: pointer;
-    width: 30%;
+    
+.problem p,
+.priority p,
+.info p {
+    margin-bottom: 5px;
+    color: wheat;
+}
+    
+.problem input[type="text"],
+.info input[type="text"],
+.info input[type="date"] {
+    width: 290px;
     padding: 5px;
-    border: 1px solid #ccc;
+    margin-bottom: 10px;
     border-radius: 5px;
-    margin-bottom: 15px;
-}
-
-.problem {
-    background-color: black;
-    color: #ffffff;
-    cursor: pointer;
-    width: 30%;
-    padding: 5px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 15px;
 }
-
-.input-field {
-    margin-bottom: 15px;
+    
+.priority input[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    outline: none;
+    margin-right: 5px;
+    vertical-align: middle;
+    position: relative;
+    top: 3px;
 }
-
-a.button {
+    
+.priority .green,
+.priority .yellow,
+.priority .red {
     display: inline-block;
+    margin-right: 10px;
+}
+    
+.priority label {
+    color: #fff;
+    margin-right: 10px;
+    cursor: pointer;
+}
+    
+.nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+    
+.nav li {
+    display: inline-block;
+    margin-right: 10px;
+}
+    
+.nav li a {
+    display: inline-block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #333;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+    
+.nav li a:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+    
+.button-wrapper {
+    text-align: center;
+    margin-top: 20px;
+}
+    
+.button-wrapper button {
     background-color: #008CBA;
-    color: #ffffff;
+    color: #fff;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    margin-bottom: 30px;
+    border: none;
+    cursor: pointer;
 }
-  
-a.button:hover {
+    
+.button-wrapper button:hover {
     background-color: #007A9A;
 }
-  
 
-.green input[type="checkbox"] {
+.priority input[type="radio"] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     width: 16px;
     height: 16px;
-    border-radius: 3px;
-    border: 2px solid #009933;
+    border-radius: 50%;
+    border: 2px solid #fff;
     outline: none;
-    background-color: #009933;
+    margin-right: 5px;
+    vertical-align: middle;
+    position: relative;
+    top: 3px;
 }
-  
-.yellow input[type="checkbox"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+
+.priority label {
+    display: inline-block;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.radio-label {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.priority input[type="radio"] {
+    display: none;
+}
+
+.priority .radio-custom {
+    display: inline-block;
     width: 16px;
     height: 16px;
-    border-radius: 3px;
-    border: 2px solid #ffcc00;
-    outline: none;
-    background-color: #ffcc00;
+    border-radius: 50%;
+    border: 2px solid wheat;
+    margin-right: 5px;
+    position: relative;
+    top: 4px;
+    cursor: pointer;
 }
-  
-.red input[type="checkbox"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 3px;
-    border: 2px solid #ff0000;
-    outline: none;
-    background-color: #ff0000;
+
+.priority input[type="radio"]:checked + .radio-custom {
+    background-color: wheat;
 }
-  
-  
-  
-  
+
+.priority .radio-label {
+    cursor: pointer;
+}
+
+
+.green {
+    color: #009933;
+}
+
+.yellow {
+    color: #ffcc00;
+}
+
+.red {
+    color: #ff0000;
+}

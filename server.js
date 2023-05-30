@@ -3,8 +3,10 @@ var express = require('express');
 var fs = require("fs");
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
+const multer = require('multer');
 
 var app = express();
+const upload = multer({ dest: 'uploads/' });
 
 app.use(express.static('public'));
 
@@ -292,7 +294,6 @@ app.get('/case_status', function (req, res) {
 
 
 
-
 app.get('/cancel_case', function (req, res) {
   req.session.destroy(function (error) {
     if (error) {
@@ -305,9 +306,16 @@ app.get('/cancel_case', function (req, res) {
 });
 
 
-
-
-
+app.get('/user_info', function (req, res) {
+  req.session.destroy(function (error) {
+    if (error) {
+      console.log(error);
+    }
+    res.render('user_info.ejs', {
+      data: session.all_user_info
+    });
+  });
+});
 
 
 
@@ -336,16 +344,66 @@ app.post('/send_case', (req, res) => {
 
 
 
-
-
-
-// Definer ruter og håndter forespørsler
 app.post('/send_case', (req, res) => {
-  // Render EJS-filen og send den som respons
   res.render('user.ejs');
 });
 
 
+
+// Rute for å behandle innsendt sak
+app.post('/send_case', (req, res) => {
+  // Håndter innsendt sak og lagre data i databasen
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.get('/user_info/:id', (req, res) => {
+  const userId = req.params.id;
+
+  // Utfør MySQL-spørring for å hente brukerinformasjon basert på brukerens ID
+  const sql = 'SELECT * FROM brukere WHERE id = ?';
+  con.query(sql, [userId], (err, result) => {
+    if (err) {
+      console.error('Feil ved databaseforespørsel: ' + err.stack);
+      res.status(500).send('Feil ved databaseforespørsel');
+      return;
+    }
+
+    // Sjekk om brukeren ble funnet
+    if (result.length === 0) {
+      res.status(404).send('User not found');
+      return;
+    }
+
+    // Send brukerinformasjon til visningen
+    const user = result[0];
+    res.render('user_info.ejs', { user });
+  });
+});
+app.post('/user_info', (req, res) => {
+  const { image, name, lastname, email, tlf, age } = req.body;
+  res.render('user_info.ejs', { image, name, lastname, email, tlf, age });
+});
+
+app.get('/user_info', (req, res) => {
+  res.render('user_info.ejs');
+});
 
 
 

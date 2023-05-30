@@ -8,22 +8,22 @@
     <title>EJS</title>
 </head>
 <body>
-    <h1>User Information</h1>
+    <h1>Logged in as</h1>
 
     <form action="/user" method="post"></form>
 
 
   
     <ul class="user-list">
-        <% data.forEach(function(d) { %>
-          <li class="user-item">
+      <% data.forEach(function(d) { %>
+        <li class="user-item">
           <strong class="brukernavn"></strong><%= d.brukernavn %></strong>
           <strong class="mellomnavn"></strong><%= d.mellomnavn %></strong>
           <strong class="etternavn"></strong><%= d.etternavn %></strong> 
           <strong class="alder"><%= d.alder %></strong>
           <strong class="email"><%= d.email %></strong> 
-          </li>
-        <% }); %>
+        </li>
+      <% }); %>
     </ul>
     
     
@@ -38,6 +38,7 @@
           <li><a href="about_us">About us</a></li>
           <li><a href="contact_agent">Contact Agent</a></li>
           <li><a href="case_status">Status Case</a></li>
+          <li><a href="user_info">User Info</a></li>
         </ul>
       </div>
       
@@ -51,7 +52,7 @@
     </div>
 
     <div id="holder">
-      change your mind?
+      Change your mind?
     </div>
         
 
