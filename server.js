@@ -372,7 +372,6 @@ app.post('/send_case', (req, res) => {
 
 
 
-
 app.get('/user_info/:id', (req, res) => {
   const userId = req.params.id;
 
@@ -404,6 +403,9 @@ app.post('/user_info', (req, res) => {
 app.get('/user_info', (req, res) => {
   res.render('user_info.ejs');
 });
+
+
+
 
 
 
