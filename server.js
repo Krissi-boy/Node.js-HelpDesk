@@ -31,9 +31,6 @@ app.set('view engine', 'ejs');
 // a variable to save a session
 var session;
 
-
-
-
 // Create database connection
 var con = mysql.createConnection({
   host: "kristoffer-mysql.mysql.database.azure.com",
@@ -44,9 +41,6 @@ var con = mysql.createConnection({
   ssl: { ca: fs.readFileSync("DigiCertGlobalRootCA.crt.pem") }
 });
 
-
-
-
 con.connect((error) => {
   if (error) {
     console.error('Feil ved tilkobling til MySQL-databasen: ' + error.stack);
@@ -55,9 +49,6 @@ con.connect((error) => {
 
   console.log('Tilkoblet til MySQL-databasen som ID: ' + con.threadId);
 });
-
-
-
 
 app.get('/index.html', function (req, res) {
     //if (err) throw err;
@@ -76,32 +67,20 @@ app.get('/index.html', function (req, res) {
   }); // connect
 }); // app get
 
-
-
-
 app.get('/', function (req, res) {
   session = req.session;
   if (session.userid) {
-    res.render('user.ejs', {
-      userid: session.userid
-    }); // render
+    res.redirect('/user')// render
 
   } else {
     res.render('startup.ejs', {});
   }
 }); // render
 
-
-
-
 app.get('/logout', function (req, res) {
   req.session.destroy();
   res.render('startup.ejs', {});
 });
-
-
-
-
 
 app.get('/user', function (req, res) {
   session = req.session;
@@ -114,10 +93,6 @@ app.get('/user', function (req, res) {
     res.render('startup.ejs', {});
   }
 });
-
-
-
-
 
 app.post('/user', function (req, res) {
   // hent brukernavn og passord fra skjema på login
@@ -139,7 +114,8 @@ app.post('/user', function (req, res) {
          session.userid = req.body.username; // sett session userid til brukernavn
          session.mellomnavn = results[0].mellomnavn;
         session.all_user_info = results;
-  
+        session.person_nr = results[0].person_nr
+        console.log("personnr:", results[0].person_nr)
 
         res.redirect('/user');
       } else {
@@ -152,10 +128,6 @@ app.post('/user', function (req, res) {
     res.render('user.ejs', {});
   });
   
-  
-
-
-
   app.post('/user_insert', (req, res) => {
     // hent data fra skjemaet
     var username = req.body.username;
@@ -176,13 +148,6 @@ app.post('/user', function (req, res) {
       res.render('startup.ejs');
     });
   });
-  
-
-
-
-
-
-  
 
 // POST-rute for å sende inn en sak
 app.post('/user_insert', (req, res) => {
@@ -206,8 +171,6 @@ app.post('/user_insert', (req, res) => {
   });
 });
 
-
-
 // logout button in user.ejs
 app.get('/log_out', function (req, res) {
   //.destroy use to kill all session from user
@@ -219,11 +182,6 @@ app.get('/log_out', function (req, res) {
   });
 });
 
-
-
-
-
-
 // Change account button in user.ejs
 app.get('/change_account', function (req, res) {
   req.session.destroy(function (error) {
@@ -234,90 +192,111 @@ app.get('/change_account', function (req, res) {
   });
 });
 
-
-
 // Change Contact Agent button in user.ejs
 app.get('/contact_agent', function (req, res) {
-  req.session.destroy(function (error) {
-    if (error) {
-      console.log(error);
-    }
-    res.render('send_case.ejs');
-  });
+  if (!req.session.userid) {
+    res.send("Not logged in")
+} else {
+  req.session.data = session.all_user_info;
+res.render('send_case.ejs', {
+  data: req.session ? req.session.data : session.all_user_info
 });
-
+}
+});
 
 // Change About Us button in user.ejs
-app.get('/about_us', function (req, res) {
-  req.session.destroy(function (error) {
-    if (error) {
-      console.log(error);
-    }
-    res.render('helpdesk_info.ejs');
-  });
+app.get('/about_us', function (req, res) { 
+  if (!req.session.userid) {
+    res.send("Not logged in")
+} else {
+  req.session.data = session.all_user_info;
+res.render('helpdesk_info.ejs', {
+  data: req.session ? req.session.data : session.all_user_info
 });
-
+}
+});
 
 // Change FAQ button in user.ejs
 app.get('/FAQ_site', function (req, res) {
-  req.session.destroy(function (error) {
-    if (error) {
-      console.log(error);
-    }
-    res.render('FAQ.ejs');
-  });
+  if (!req.session.userid) {
+    res.send("Not logged in")
+} else {
+  req.session.data = session.all_user_info;
+res.render('FAQ.ejs', {
+  data: req.session ? req.session.data : session.all_user_info
 });
-
-
+}
+});
 
 app.get('/home_site', function (req, res) {
-  req.session.destroy(function (error) {
-    if (error) {
-      console.log(error);
-    }
-    res.render('user.ejs', {
-      data: session.all_user_info
-    });
-  });
+  if (!req.session.userid) {
+    res.send("Not logged in")
+} else {
+  req.session.data = session.all_user_info;
+res.render('user.ejs', {
+  data: req.session ? req.session.data : session.all_user_info
 });
+}
+});
+
 
 
 
 app.get('/case_status', function (req, res) {
-  req.session.destroy(function (error) {
-    if (error) {
-      console.log(error);
-    }
-    res.render('case_status.ejs');
-  });
+  if (!req.session.userid) {
+    res.send("Not logged in")
+} else {
+
+session=req.session
+person_nr = session.person_nr
+console.log(person_nr)
+var sql = 'SELECT * FROM tickets WHERE eier_tickets = ?'
+con.query(sql, [person_nr]), (error, result) => {
+  console.log(result)
+  if (error) {
+    console.error('Feil ved dataforespørsel: ' + error.stack)
+    res.status(500).send('Feil ved dataforespøsel');
+    return;
+  }
+else {
+  res.render("case_status.ejs", {
+    data: result
+  }
+  
+  )
+}
+
+}
+
+
+  req.session.data = session.all_user_info;
+res.render('case_status.ejs', {
+  data: req.session ? req.session.data : session.all_user_info
 });
-
-
+}
+});
 
 app.get('/cancel_case', function (req, res) {
-  req.session.destroy(function (error) {
-    if (error) {
-      console.log(error);
-    }
-    res.render('user.ejs', {
-      data: session.all_user_info
-    });
-  });
+  if (!req.session.userid) {
+    res.send("Not logged in")
+} else {
+  req.session.data = session.all_user_info;
+res.render('user.ejs', {
+  data: req.session ? req.session.data : session.all_user_info
 });
-
+}
+});
 
 app.get('/user_info', function (req, res) {
-  req.session.destroy(function (error) {
-    if (error) {
-      console.log(error);
-    }
-    res.render('user_info.ejs', {
-      data: session.all_user_info
-    });
-  });
+  if (!req.session.userid) {
+    res.send("Not logged in")
+} else {
+  req.session.data = session.all_user_info;
+res.render('user_info.ejs', {
+  data: req.session ? req.session.data : session.all_user_info
 });
-
-
+}
+});
 
 // POST-rute for å sende inn en sak
 app.post('/send_case', (req, res) => {
@@ -328,8 +307,14 @@ app.post('/send_case', (req, res) => {
   var timeframe = req.body.timeframe;
   var category = req.body.category;
 
-  var sql = `INSERT INTO tickets (problem, bilde, nivaa, tidsramme, kategori) VALUES (?, ?, ?, ?, ?)`;
-  var values = [problem, image, nivaa, timeframe, category];
+  session = req.session;
+  person_nr = session.person_nr;
+  console.log(person_nr);
+
+
+
+  var sql = `INSERT INTO tickets (problem, bilde, nivaa, tidsramme, kategori, eier_tickets) VALUES (?, ?, ?, ?, ?, ?)`;
+  var values = [problem, image, nivaa, timeframe, category, person_nr];
 
   con.query(sql, values, (err, result) => {
     if (err) {
@@ -338,32 +323,19 @@ app.post('/send_case', (req, res) => {
     console.log('case inserted into database');
 
     res.render('case_status.ejs', {
+      message: 'Saken er sendt'
     });
   });
 });
-
-
 
 app.post('/send_case', (req, res) => {
   res.render('user.ejs');
 });
 
-
-
 // Rute for å behandle innsendt sak
 app.post('/send_case', (req, res) => {
   // Håndter innsendt sak og lagre data i databasen
 });
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -403,14 +375,6 @@ app.post('/user_info', (req, res) => {
 app.get('/user_info', (req, res) => {
   res.render('user_info.ejs');
 });
-
-
-
-
-
-
-
-
 
 
 

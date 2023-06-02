@@ -11,37 +11,22 @@
     <h1>User information</h1>
 
     <div class="user-info">
-        <img src="<%= user.image %>" alt="<%= user.name %>">
-        <h2><%= user.name %></h2>
-        <p>Lastname: <%= user.lastname %></p>
-        <p>Email: <%= user.email %></p>
-        <p>Tlf: <%= user.tlf %></p>
-        <p>Age: <%= user.age %></p>
+        <img src="<%= d.image %>" alt="<%= d.name %>">
+        <h2><%= d.name %></h2>
+        <p>Lastname: <%= d.lastname %></p>
+        <p>Email: <%= d.email %></p>
+        <p>Tlf: <%= d.tlf %></p>
+        <p>Age: <%= d.age %></p>
     </div>
-
 
     <form action="/user_info" method="post">
         <div class="input-field">
             <input type="image" name="image" id="image" placeholder="Image">
         </div>
-        <div class="input-field">
-          <input type="email" name="email" id="email" placeholder="Email">
-        </div>
-        <div class="input-field">
-          <input type="text" name="lastname" id="lastname" placeholder="Lastname">
-        </div>
-        <div class="input-field">
-            <input type="text" name="tlf" id="tlf" placeholder="Tlf">
-          </div>
-        <div class="input-field">
-          <input type="number" name="age" id="age" placeholder="Age">
-        </div>
       </form>
-
 
     <div class="user_info">
         <button><a href="/home_site">Home</a></button>
     </div>
-
 </body>
 </html>
