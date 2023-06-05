@@ -4,41 +4,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="startup.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="dark_mode.css" media="(prefers-color-scheme: dark)">
     <title>EJS</title>
 </head>
 <body>
     <h1>HelpDesk</h1>
-
-    <h2>Please log in! :)</h2>
+  
+    <h2>Please log in :)</h2>
     <form action="/user" method="post">
       <div class="input-field">
-          <input type="text" name="username" id="username" placeholder="Enter Username">
+          <input type="text" name="username" id="login_username" placeholder="Enter Username">
       </div>
       <div class="input-field">
-          <input type="password" name="password" id="password" placeholder="Enter Password">
+          <input type="password" name="password" id="login_password" placeholder="Enter Password">
       </div>
       <input type="submit" value="LogIn">
     </form>
-
+ 
     <h2>Don't have an account yet? :)</h2>
     <form action="/user_insert" method="post">
-        <div class="input-field">
-            <input type="text" name="username" id="username" placeholder="Enter Username">
-        </div>
-        <div class="input-field">
-            <input type="password" name="password" id="password" placeholder="Enter Password">
-        </div>
-        <div class="input-field">
-          <input type="email" name="email" id="email" placeholder="Enter email">
-        </div>
-        <div class="input-field">
-          <input type="text" name="lastname" id="lastname" placeholder="Enter lastname">
-        </div>
-        <div class="input-field">
-          <input type="number" name="age" id="age" placeholder="Enter age">
-        </div>
-        <input type="submit" value="Sign up">
-      </form>
+      <div class="input-field">
+          <input type="text" name="username" id="new_user_username" placeholder="Enter Username">
+      </div>
+      <div class="input-field">
+          <input type="password" name="password" id="new_user_password" placeholder="Enter Password">
+      </div>
+      <div class="input-field">
+        <input type="email" name="email" id="email" placeholder="Enter email">
+      </div>
+      <div class="input-field">
+        <input type="text" name="lastname" id="lastname" placeholder="Enter lastname">
+      </div>
+      <div class="input-field">
+        <input type="number" name="age" id="age" placeholder="Enter age">
+      </div>
+      <input type="submit" value="Sign up">
+    </form>
+
+    <button id="theme_toggle">Bytt modus</button>
+    <script src="klient.js"></script>
+
 </body>
 </html>

@@ -1,5 +1,5 @@
 body {
-    background-image: url(info_background.jpg);
+    background-image: url('info_background.jpg');
     background-size: fill;
     background-position: fill;
     font-family: Arial, sans-serif;

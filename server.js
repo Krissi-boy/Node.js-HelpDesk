@@ -111,8 +111,8 @@ app.post('/user', function (req, res) {
 
     } else if (results.length === 1) {
         session = req.session;
-         session.userid = req.body.username; // sett session userid til brukernavn
-         session.mellomnavn = results[0].mellomnavn;
+        session.userid = req.body.username; // sett session userid til brukernavn
+        session.mellomnavn = results[0].mellomnavn;
         session.all_user_info = results;
         session.person_nr = results[0].person_nr
         console.log("personnr:", results[0].person_nr)
@@ -126,27 +126,6 @@ app.post('/user', function (req, res) {
   
   app.get('/login', function (req, res) {
     res.render('user.ejs', {});
-  });
-  
-  app.post('/user_insert', (req, res) => {
-    // hent data fra skjemaet
-    var username = req.body.username;
-    var email = req.body.email;
-    var password = req.body.password;
-    var lastname = req.body.lastname;
-    var age = req.body.age;
-  
-    var sql = `INSERT INTO brukere (brukernavn, email, passord, etternavn, alder) VALUES (?, ?, ?, ?, ?)`;
-    var values = [username, email, password, lastname, age];
-  
-    con.query(sql, values, (err, result) => {
-      if (err) {
-        throw err;
-      }
-      console.log('User inserted into database');
-      
-      res.render('startup.ejs');
-    });
   });
 
 // POST-rute for å sende inn en sak
@@ -239,9 +218,6 @@ res.render('user.ejs', {
 }
 });
 
-
-
-
 app.get('/case_status', function (req, res) {
   if (!req.session.userid) {
     res.send("Not logged in")
@@ -262,13 +238,9 @@ else {
   res.render("case_status.ejs", {
     data: result
   }
-  
   )
 }
-
 }
-
-
   req.session.data = session.all_user_info;
 res.render('case_status.ejs', {
   data: req.session ? req.session.data : session.all_user_info
@@ -322,27 +294,9 @@ app.post('/send_case', (req, res) => {
     }
     console.log('case inserted into database');
 
-    res.render('case_status.ejs', {
-      message: 'Saken er sendt'
-    });
+    res.redirect('/case_status');
   });
 });
-
-app.post('/send_case', (req, res) => {
-  res.render('user.ejs');
-});
-
-// Rute for å behandle innsendt sak
-app.post('/send_case', (req, res) => {
-  // Håndter innsendt sak og lagre data i databasen
-});
-
-
-
-
-
-
-
 
 app.get('/user_info/:id', (req, res) => {
   const userId = req.params.id;
@@ -375,12 +329,6 @@ app.post('/user_info', (req, res) => {
 app.get('/user_info', (req, res) => {
   res.render('user_info.ejs');
 });
-
-
-
-
-
-
 
   var server = app.listen(8081, function () {
     var host = server.address().address;

@@ -1,87 +1,108 @@
 body {
-    background-image: url(case.jpg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+  background-image: url('case.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
 }
 
+.container { 
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+  
+.nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+  
+.nav ul li {
+  display: inline-block;
+  margin-right: 10px;
+}
+  
+.nav ul li a {
+  text-decoration: none;
+  color: #333;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #e6e6e6;
+  transition: background-color 0.3s ease;
+}
+  
+.nav ul li a:hover {
+  background-color: #ccc;
+}
+  
+.user-list {
+  list-style: none;
+  padding: 0;
+}
+  
+.user-item {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+  
+.user-item strong {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
 
-  
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  
-  .nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .nav ul li {
-    display: inline-block;
-    margin-right: 10px;
-  }
-  
-  .nav ul li a {
-    text-decoration: none;
-    color: #333;
-    padding: 5px 10px;
-    border-radius: 5px;
-    background-color: #e6e6e6;
-    transition: background-color 0.3s ease;
-  }
-  
-  .nav ul li a:hover {
-    background-color: #ccc;
-  }
-  
-  /* Brukerliste stil */
-  .user-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .user-item {
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .user-item strong {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .user-item .eier,
-  .user-item .status,
-  .user-item .tidsramme,
-  .user-item .bilde,
-  .user-item .review,
-  .user-item .start_tid,
-  .user-item .tid_slutt,
-  .user-item .kategori,
-  .user-item .problem {
-    color: #333;
-  }
-  
-  .user-item .eier::before,
-  .user-item .status::before,
-  .user-item .tidsramme::before,
-  .user-item .bilde::before,
-  .user-item .review::before,
-  .user-item .start_tid::before,
-  .user-item .tid_slutt::before,
-  .user-item .kategori::before,
-  .user-item .problem::before {
-    content: attr(class)": ";
-    font-weight: bold;
-  }
-  
+.user-list {
+  list-style-type: none;
+  padding: 0;
+}
 
+.user-item {
+  background-color: #f2f2f2;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.user-item strong {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.eier {
+  color: #333333;
+}
+
+.status {
+  color: #666666;
+}
+
+.tidsramme {
+  color: #666666;
+}
+
+.bilde {
+  color: #666666;
+}
+
+.review {
+  color: #666666;
+}
+
+.start_tid {
+  color: #666666;
+}
+
+.tid_slutt {
+  color: #666666;
+}
+
+.kategori {
+  color: #666666;
+}
+
+.problem {
+  color: #666666;
+}
