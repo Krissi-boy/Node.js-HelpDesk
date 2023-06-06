@@ -1,6 +1,8 @@
 body {
     background-image: url('FAQ.jpg');
     background-size: cover;
+    background-size: fill;
+    background-position: fill;
     background-repeat: no-repeat;
 }
 

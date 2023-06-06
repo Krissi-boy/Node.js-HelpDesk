@@ -11,10 +11,10 @@ if (preferredMode === 'dark') {
 }
 
 // Lytter etter en hendelse som bytter mellom mørk og lys modus
-var modeToggle = document.querySelector('#theme_toogle');
+var themeToggle = document.querySelector('#theme_toogle');
 
-console.log(modeToggle)
-modeToggle.addEventListener('change', () => {
+console.log(themeToggle)
+themeToggle.addEventListener('change', () => {
   if (body.classList.contains('dark_mode')) {
     body.classList.remove('dark_mode');
     localStorage.setItem('preferredMode', 'light');

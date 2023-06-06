@@ -220,33 +220,24 @@ res.render('user.ejs', {
 
 app.get('/case_status', function (req, res) {
   if (!req.session.userid) {
-    res.send("Not logged in")
-} else {
+    res.send("Not logged in");
+  } else {
+    var person_nr = req.session.person_nr;
+    console.log("personnr:", person_nr);
+    var sql = 'SELECT * FROM tickets WHERE eier_tickets = ?';
+    con.query(sql, [person_nr], (error, result) => {
+      if (error) {
+        console.error('Feil ved dataforespørsel: ' + error.stack);
+        res.status(500).send('Feil ved dataforespøsel');
+      } else {
+        res.render("case_status.ejs", {
+          data: result
+        });
+      }
+    });
+  }
+});
 
-session=req.session
-person_nr = session.person_nr
-console.log(person_nr)
-var sql = 'SELECT * FROM tickets WHERE eier_tickets = ?'
-con.query(sql, [person_nr]), (error, result) => {
-  console.log(result)
-  if (error) {
-    console.error('Feil ved dataforespørsel: ' + error.stack)
-    res.status(500).send('Feil ved dataforespøsel');
-    return;
-  }
-else {
-  res.render("case_status.ejs", {
-    data: result
-  }
-  )
-}
-}
-  req.session.data = session.all_user_info;
-res.render('case_status.ejs', {
-  data: req.session ? req.session.data : session.all_user_info
-});
-}
-});
 
 app.get('/cancel_case', function (req, res) {
   if (!req.session.userid) {
@@ -264,8 +255,8 @@ app.get('/user_info', function (req, res) {
     res.send("Not logged in")
 } else {
   req.session.data = session.all_user_info;
-res.render('user_info.ejs', {
-  data: req.session ? req.session.data : session.all_user_info
+  res.render('user_info.ejs', {
+    data: req.session ? req.session.data : session.all_user_info
 });
 }
 });
@@ -321,6 +312,7 @@ app.get('/user_info/:id', (req, res) => {
     res.render('user_info.ejs', { user });
   });
 });
+
 app.post('/user_info', (req, res) => {
   const { image, name, lastname, email, tlf, age } = req.body;
   res.render('user_info.ejs', { image, name, lastname, email, tlf, age });

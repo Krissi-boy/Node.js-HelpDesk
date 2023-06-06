@@ -6,6 +6,8 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-size: fill;
+    background-position: fill;
 }
   
 h1 {

@@ -2,6 +2,8 @@ body {
   background-image: url('case.jpg');
   background-size: cover;
   background-repeat: no-repeat;
+  background-size: fill;
+  background-position: fill;
   font-family: Arial, sans-serif;
   background-color: #f2f2f2;
 }
@@ -72,37 +74,78 @@ body {
 }
 
 .eier {
-  color: #333333;
+  color: black;
+  font: bold;
 }
 
-.status {
-  color: #666666;
+/* Generelle stiler */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f4f4f4;
 }
 
-.tidsramme {
-  color: #666666;
+h1 {
+  color: #333;
 }
 
-.bilde {
-  color: #666666;
+/* Navigasjonsstil */
+.nav {
+  background-color: #333;
+  padding: 10px;
 }
 
-.review {
-  color: #666666;
+.nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.start_tid {
-  color: #666666;
+.nav li {
+  display: inline-block;
+  margin-right: 10px;
 }
 
-.tid_slutt {
-  color: #666666;
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 10px;
 }
 
-.kategori {
-  color: #666666;
+/* Brukerliste */
+.user-list {
+  list-style: none;
+  padding: 0;
 }
 
+.user-item {
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-item strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.data-value {
+  color: black;
+}
+
+.status,
+.tidsramme,
+.bilde,
+.review,
+.start_tid,
+.tid_slutt,
+.kategori,
 .problem {
-  color: #666666;
+  color: blue;
+}
+
+.static-value {
+  color: black;
 }

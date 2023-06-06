@@ -8,33 +8,28 @@
   <title>Case Status</title>
 </head>
 <body>
-  
-
-
-<div class="nav">
+  <div class="nav">
     <ul>
-        <li><a href="home_site">Home</a></li>
+      <li><a href="home_site">Home</a></li>
     </ul>
-</div>
+  </div>
 
+  <ul class="user-list">
+    <% data.forEach(function(d) { %>
+      <li class="user-item">
+        <strong class="eier">Eier: <%= d.eier_tickets %></strong>
+        <strong class="status">Status: <%= d.status %></strong>
+        <strong class="tidsramme">Tidsramme: <%= d.tidsramme %></strong>
+        <strong class="bilde">Bilde: <%= d.bilde %></strong>
+        <strong class="review">Review: <%= d.review %></strong>
+        <strong class="start_tid">Starttid: <%= d.start_tid %></strong>
+        <strong class="tid_slutt">Tid slutt: <%= d.tid_slutt %></strong>
+        <strong class="kategori">Kategori: <%= d.kategori %></strong>
+        <strong class="problem">Problem: <%= d.problem %></strong>
+      </li>
+    <% }); %>
+  </ul>
 
-    <ul class="user-list">
-      <% data.forEach(function(d) { %>
-        <li class="user-item">
-          <strong class="eier"></strong><%= d.eier_tickets %></strong>
-          <strong class="status"></strong><%= d.status %></strong>
-          <strong class="tidsramme"></strong><%= d.tidsramme %></strong>
-          <strong class="bilde"></strong><%= d.bilde %></strong>
-          <strong class="review"></strong><%= d.review %></strong>
-          <strong class="start_tid"></strong><%= d.start_tid%></strong>
-          <strong class="tid_slutt"></strong><%= d.tid_slutt %></strong>
-          <strong class="kategori"></strong><%= d.kategori %></strong>
-          <strong class="problem"></strong><%= d.problem %></strong>
-        </li>
-      <% }); %>
-    </ul>
-
-
-  </body>
-  </html>
-  
+  <script src="klient.js"></script>
+</body>
+</html>

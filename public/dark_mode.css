@@ -3,11 +3,11 @@ body.dark_mode {
     color: #fff;
   }
   
-  .container.dark-mode {
+  .container.dark_mode {
     background-color: #222;
   }
   
-  .button.dark-mode {
+  .button.dark_mode {
     background-color: #fff;
     color: #333;
   }
