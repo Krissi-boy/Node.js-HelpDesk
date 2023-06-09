@@ -13,13 +13,11 @@
         <p><strong>Alder:</strong> <%= d.alder %></p>
     
 
-       
     <% if (data.bilde) { %>
-      <img src="/uploads/<%= d.image %>" alt="Profilbilde">
+      <img src="/public/<%= d.bilde %>" alt="Profilbilde">
     <% } else { %>
       <p>Ingen bilde tilgjengelig</p>
     <% } %>
- 
 
   <form action="/user_info" method="post" enctype="multipart/form-data">
     <input type="hidden" name="_method" value="PUT"> 
@@ -46,7 +44,7 @@
     <input type="file" name="image">
 
     <button type="submit">Oppdater informasjon</button>
-    <a href="home_site">Home</a>
+    <a href="/home_site">Home</a>
     <% }); %>
   </form>
 </body>

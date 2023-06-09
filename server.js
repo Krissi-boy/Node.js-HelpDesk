@@ -4,25 +4,23 @@ var fs = require("fs");
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 const multer = require('multer');
+const path = require('path');
 
 var app = express();
 // Angi målplassering og filnavn for opplastede bilder
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
+  destination: (req, file, cb) => {
+    cb(null, 'public/upload');
   },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname);
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + '-' + file.originalname);
   }
 });
-
-
 // Opprett multer-opplastingsobjektet
 const upload = multer({ storage: storage });
 
-
-
-app.use(express.static('public'));
+app.use( express.static('public'));
 
 // parsing the incoming data
 app.use(express.json());
@@ -308,15 +306,14 @@ app.post('/send_case', (req, res) => {
   });
 });
 
-
-// GET-rute for å vise brukerinformasjon basert på brukerens ID
+// POST-rute for å oppdatere brukerinformasjon
 app.post('/user_info', upload.single('image'), (req, res) => {
-  const { image, name, lastname, email, tlf, age } = req.body;
-  const data = { image, name, lastname, email, tlf, age };
+  const { name, lastname, email, tlf, age } = req.body;
+  const image = req.file; // Opplastet bildefil
 
   // Utfør MySQL-spørring for å oppdatere brukerinformasjon i databasen
-  const sql = 'UPDATE brukere SET bilde = ?, brukernavn = ?, etternavn = ?, email = ?, tlf = ?, alder = ? WHERE id = ?';
-  const values = [image, name, lastname, email, tlf, age, req.session.userid]; 
+  const sql = 'UPDATE brukere SET brukernavn = ?, etternavn = ?, email = ?, tlf = ?, alder = ?, bilde = ? WHERE id = ?';
+  const values = [name, lastname, email, tlf, age, image.filename, req.session.userid];
 
   con.query(sql, values, (err, result) => {
     if (err) {
@@ -330,10 +327,27 @@ app.post('/user_info', upload.single('image'), (req, res) => {
   });
 });
 
+// GET-rute for å vise brukerinformasjon basert på brukerens ID
+app.get('/user_info/:id', (req, res) => {
+  const userId = req.params.id;
 
-// GET-rute for å vise tom skjema for brukerinformasjon
-app.get('/user_info', (req, res) => {
-  res.render('user_info.ejs');
+  // Utfør MySQL-spørring for å hente brukerinformasjon basert på brukerens ID
+  const sql = 'SELECT * FROM brukere WHERE id = ?';
+  con.query(sql, [userId], (err, result) => {
+    if (err) {
+      console.error('Feil ved databaseforespørsel: ' + err.stack);
+      res.status(500).send('Feil ved databaseforespørsel');
+      return;
+    }
+    // Sjekk om brukeren ble funnet
+    if (result.length === 0) {
+      res.status(404).send('User not found');
+      return;
+    }
+    // Send brukerinformasjon til visningen
+    const user = result[0];
+    res.render('user_info.ejs', { user });
+  });
 });
 
   var server = app.listen(8081, function () {
