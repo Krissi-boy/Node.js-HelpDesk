@@ -1,33 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="user_info.css">
-    <title>User Information</title>
+  <title>Brukerinformasjon</title>
 </head>
 <body>
-    <h1>User information</h1>
+  <h1>User Information</h1>
 
-    <div class="user-info">
-        <img src="<%= d.image %>" alt="<%= d.name %>">
-        <h2><%= d.name %></h2>
-        <p>Lastname: <%= d.lastname %></p>
-        <p>Email: <%= d.email %></p>
-        <p>Tlf: <%= d.tlf %></p>
-        <p>Age: <%= d.age %></p>
-    </div>
+    <% data.forEach(function(d) { %>
+        <h2><%= d.brukernavn %> <%= d.mellomnavn %> <%= d.etternavn %></h2>
+        <p><strong>E-post:</strong> <%= d.email %></p>
+        <p><strong>Telefon:</strong> <%= d.tlf %></p>
+        <p><strong>Alder:</strong> <%= d.alder %></p>
+    
 
-    <form action="/user_info" method="post">
-        <div class="input-field">
-            <input type="image" name="image" id="image" placeholder="Image">
-        </div>
-      </form>
+       
+    <% if (data.bilde) { %>
+      <img src="/uploads/<%= d.image %>" alt="Profilbilde">
+    <% } else { %>
+      <p>Ingen bilde tilgjengelig</p>
+    <% } %>
+ 
 
-    <div class="user_info">
-        <button><a href="/home_site">Home</a></button>
-    </div>
-    <script src="klient.js"></script>
+  <form action="/user_info" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="_method" value="PUT"> 
+
+    <label for="name">Navn:</label>
+    <input type="text" name="brukernavn" value="<%= d.brukernavn %>">
+
+    <label for="lastname">mellomnavn:</label>
+    <input type="text" name="mellomnavn" value="<%= d.mellomnavn %>">
+
+    <label for="lastname">Etternavn:</label>
+    <input type="text" name="etternavn" value="<%= d.etternavn %>">
+
+    <label for="email">E-post:</label>
+    <input type="email" name="email" value="<%= d.email%>">
+
+    <label for="tlf">Telefon:</label>
+    <input type="number" name="tlf" value="<%= d.tlf %>">
+
+    <label for="age">Alder:</label>
+    <input type="number" name="age" value="<%= d.alder %>">
+
+    <label for="image">Profilbilde:</label>
+    <input type="file" name="image">
+
+    <button type="submit">Oppdater informasjon</button>
+    <a href="home_site">Home</a>
+    <% }); %>
+  </form>
 </body>
 </html>

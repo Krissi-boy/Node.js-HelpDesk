@@ -6,7 +6,21 @@ const sessions = require('express-session');
 const multer = require('multer');
 
 var app = express();
-const upload = multer({ dest: 'uploads/' });
+// Angi målplassering og filnavn for opplastede bilder
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+
+// Opprett multer-opplastingsobjektet
+const upload = multer({ storage: storage });
+
+
 
 app.use(express.static('public'));
 
@@ -264,11 +278,15 @@ app.get('/user_info', function (req, res) {
 // POST-rute for å sende inn en sak
 app.post('/send_case', (req, res) => {
   // Hent data fra skjemaet
+  console.log(req.body)
   var problem = req.body.problem;
   var image = req.body.image;
   var nivaa = req.body.nivaa;
   var timeframe = req.body.timeframe;
   var category = req.body.category;
+  var case_started = req.body.case_started
+  var case_closed = req.body.case_closed
+  var status = req.body.status
 
   session = req.session;
   person_nr = session.person_nr;
@@ -276,48 +294,44 @@ app.post('/send_case', (req, res) => {
 
 
 
-  var sql = `INSERT INTO tickets (problem, bilde, nivaa, tidsramme, kategori, eier_tickets) VALUES (?, ?, ?, ?, ?, ?)`;
-  var values = [problem, image, nivaa, timeframe, category, person_nr];
-
+  var sql = `INSERT INTO tickets (problem, bilde, status, start_tid, tid_slutt, nivaa, tidsramme, kategori, eier_tickets) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  var values = [problem, image, status, case_started, case_closed, nivaa, timeframe, category, person_nr];
+ 
   con.query(sql, values, (err, result) => {
     if (err) {
       throw err;
     }
     console.log('case inserted into database');
+    console.log(status, case_closed, case_started)
 
     res.redirect('/case_status');
   });
 });
 
-app.get('/user_info/:id', (req, res) => {
-  const userId = req.params.id;
 
-  // Utfør MySQL-spørring for å hente brukerinformasjon basert på brukerens ID
-  const sql = 'SELECT * FROM brukere WHERE id = ?';
-  con.query(sql, [userId], (err, result) => {
+// GET-rute for å vise brukerinformasjon basert på brukerens ID
+app.post('/user_info', upload.single('image'), (req, res) => {
+  const { image, name, lastname, email, tlf, age } = req.body;
+  const data = { image, name, lastname, email, tlf, age };
+
+  // Utfør MySQL-spørring for å oppdatere brukerinformasjon i databasen
+  const sql = 'UPDATE brukere SET bilde = ?, brukernavn = ?, etternavn = ?, email = ?, tlf = ?, alder = ? WHERE id = ?';
+  const values = [image, name, lastname, email, tlf, age, req.session.userid]; 
+
+  con.query(sql, values, (err, result) => {
     if (err) {
       console.error('Feil ved databaseforespørsel: ' + err.stack);
       res.status(500).send('Feil ved databaseforespørsel');
       return;
     }
 
-    // Sjekk om brukeren ble funnet
-    if (result.length === 0) {
-      res.status(404).send('User not found');
-      return;
-    }
-
-    // Send brukerinformasjon til visningen
-    const user = result[0];
-    res.render('user_info.ejs', { user });
+    console.log('Brukerinformasjon oppdatert i databasen');
+    res.redirect('/user_info');
   });
 });
 
-app.post('/user_info', (req, res) => {
-  const { image, name, lastname, email, tlf, age } = req.body;
-  res.render('user_info.ejs', { image, name, lastname, email, tlf, age });
-});
 
+// GET-rute for å vise tom skjema for brukerinformasjon
 app.get('/user_info', (req, res) => {
   res.render('user_info.ejs');
 });

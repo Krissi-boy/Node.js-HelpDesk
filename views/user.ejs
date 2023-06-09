@@ -14,9 +14,7 @@
     <ul class="user-list">
       <% data.forEach(function(d) { %>
         <li class="user-item">
-          <strong class="brukernavn"></strong><%= d.brukernavn %></strong>
-          <strong class="mellomnavn"></strong><%= d.mellomnavn %></strong>
-          <strong class="etternavn"></strong><%= d.etternavn %></strong> 
+          <strong class="brukernavn"></strong><%= d.brukernavn %> <%= d.mellomnavn %> <%= d.etternavn %></strong>
           <strong class="alder"><%= d.alder %></strong>
           <strong class="email"><%= d.email %></strong> 
         </li>

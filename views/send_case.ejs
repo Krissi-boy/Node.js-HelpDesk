@@ -10,13 +10,12 @@
 <body>
     <h1>SEND CASE:</h1>
     
+<form action="/send_case" method="post"> 
 <div class="problem">
     <p>What problems do you encounter?</p>
-    <form action="/case_description" method="post">
         <div class="input-field">
             <input type="text" name="problem" id="problem" placeholder="Enter problem">
         </div>
-    </form>
 </div>
 
 <div class="priority">
@@ -42,10 +41,15 @@
     
 <div class="info">
     <p>Your Information</p>
-    <form action="/send_case" method="post">
       <div class="input-field">
-          <input type="text" name="image" id="image" placeholder="Enter image">
+          <input type="file" name="image" id="image" placeholder="Enter image">
       </div>
+      <div class="input-field">
+        <input type="date" name="case_started" id="case_started" placeholder="Case started">
+        </div>
+        <div class="input-field">
+           <input type="date" name="case_closed" id="case_closed" placeholder="Case closed">
+        </div>
       <div class="input-field">
           <input type="date" name="timeframe" id="timeframe" placeholder="Enter timeframe">
       </div>
